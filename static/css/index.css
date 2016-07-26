@@ -1,0 +1,13 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.Resizer {
+  width: 1px;
+  background: grey;
+}
+
+.Resizer:hover {
+  cursor: col-resize;
+}
