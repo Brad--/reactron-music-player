@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HelloWorld from './components/PlayerBody.jsx';
+import PlayerBody from './components/PlayerBody.jsx';
+import SplitPane from 'react-split-pane';
+
+document.ondragover = document.ondrop = (ev) => {
+  ev.preventDefault()
+}
 
 ReactDOM.render(
-  <HelloWorld />,
+  <PlayerBody />,
   document.getElementById('root')
 );
