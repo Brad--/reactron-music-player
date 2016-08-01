@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import SplitPane from 'react-split-pane';
+import PlayerTopMenu from './PlayerTopMenu.jsx';
+import PlayerQueue from './PlayerQueue.jsx';
 
 class PlayerBody extends Component {
   constructor() {
@@ -38,17 +39,13 @@ class PlayerBody extends Component {
     });
     return (
       <div className="player-body">
-        <div className="menu-bar">
-          <div className="reactron-logo">Reactron Music Player</div>
-        </div>
-        <div className="playlist">
-          <ul>
-            {queue}
-          </ul>
-          <div className="spacer"></div>
-          <div className="drop-area"
-               onDrop={this.onDrop}>
-          </div>
+        <PlayerTopMenu />
+        <PlayerQueue
+          queueSongs={this.state.queue}
+          nowPlaying={this.state.url}/>
+        <div className="spacer" />
+        <div className="drop-area"
+             onDrop={this.onDrop}>
         </div>
         <audio className="audio-player"
                src={this.state.url}

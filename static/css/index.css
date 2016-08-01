@@ -18,6 +18,8 @@ html, body, #root {
 
 .player-body .menu-bar {
   background: rgba(52,85,247,1);
+  font-family: sans-serif;
+  padding: 10px;
   color: white;
   height: 50px;
   display: flex;
@@ -25,10 +27,29 @@ html, body, #root {
   -webkit-app-region: drag;
 }
 
-.playlist {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
+.now-playing-bar {
+  padding: 10px;
+  background: green;
+}
+
+.now-playing-title {
+  color: white;
+  margin-bottom: 5px;
+}
+
+.song-container {
+  color: white;
+  background: red;
+  padding: 5px;
+}
+
+.queue-list {
+  padding: 10px;
+  background: orange;
+}
+.up-next-title {
+  color: white;
+  margin-bottom: 5px;
 }
 
 .spacer {
