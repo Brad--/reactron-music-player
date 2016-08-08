@@ -1,65 +1,45 @@
 import React, { Component } from 'react';
 import PlayerTopMenu from './PlayerTopMenu.jsx';
 import PlayerQueue from './PlayerQueue.jsx';
+import { connect } from 'react-redux';
+import { addQueue, next } from '../dispatchers.js';
 
-class PlayerBody extends Component {
-  constructor() {
-    super();
-    this.state = {url: "", queue: []};
-    this.onDrop = this.onDrop.bind(this);
-    this.onEnded = this.onEnded.bind(this);
-  };
-  onDrop (ev) {
-    var path = ev.dataTransfer.files[0].path;
-    var newQueue = this.state.queue;
-    if(this.state.url === "") {
-      for (var i = 1; i < ev.dataTransfer.files.length; i++) {
-        newQueue.push(ev.dataTransfer.files[i].path);
-      }
-      this.setState({url: path, queue: newQueue});
-    }
-    else {
-      for (var i = 0; i < ev.dataTransfer.files.length; i++) {
-        newQueue.push(ev.dataTransfer.files[i].path);
-      }
-      this.setState({queue: newQueue});
-    }
-    ev.preventDefault();
-  };
-  onEnded () {
-    var newQueue = this.state.queue;
-    if (this.state.queue.length === 0) {
-      this.setState({url: ""});
-    }
-    else {
-      var nextSong = newQueue.shift();
-      this.setState({url: nextSong, queue: newQueue});
-    }
-  };
+export class PlayerBody extends Component {
   render() {
-    var queue = this.state.queue.map(function(song) {
-      return (
-        <li>{song}</li>
-      );
-    });
     return (
       <div className="player-body">
         <PlayerTopMenu />
-        <PlayerQueue
-          queueSongs={this.state.queue}
-          nowPlaying={this.state.url}/>
-        <div className="spacer" />
+        <PlayerQueue queue={this.props.queue}/>
         <div className="drop-area"
-             onDrop={this.onDrop}>
+             onDrop={this.props.onDrop}>
              ♬ Drag and drop songs here ♬
         </div>
         <audio className="audio-player"
-               src={this.state.url}
-               onEnded={this.onEnded}
+               src={this.props.queue.length === 0 ?
+                 "" :
+                 this.props.queue[0].path}
+               onEnded={this.props.onEnded}
                controls autoPlay />
       </div>
     );
   }
 };
 
-export default PlayerBody;
+function mapStateToProps(state) {
+  return {
+    queue: state.get('queue').toJS()
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onDrop: ( ev ) => {
+      dispatch(addQueue(ev.dataTransfer.files))
+    },
+    onEnded: () => {
+      dispatch(next())
+    }
+  };
+}
+
+export const PlayerBodyContainer = connect(mapStateToProps, mapDispatchToProps)(PlayerBody);

@@ -3,16 +3,16 @@ import React, { Component } from 'react';
 const pattern = "/.*\/(.*)/";
 const parser = new RegExp(pattern);
 
-const beautifySongName = ( url ) => {
-  return url.split(/\\|\//).pop();
+const beautifySongName = ( file ) => {
+  return file.path.split(/\\|\//).pop();
 }
 
 class PlayerQueue extends Component {
   render() {
-    var nowPlaying = (this.props.nowPlaying === "") ?
+    var nowPlaying = (this.props.queue.length === 0) ?
       "Nothing playing" :
-      beautifySongName(this.props.nowPlaying);
-    var queueSongs = this.props.queueSongs.map(function(song) {
+      beautifySongName(this.props.queue[0]);
+    var queueSongs = this.props.queue.slice(1).map(function(song) {
       return (
         <div className="song-container">
           {beautifySongName(song)}
@@ -27,7 +27,7 @@ class PlayerQueue extends Component {
         </div>
         <div className="queue-list">
           <div className="up-next-title">Up Next: </div>
-          {this.props.queueSongs.length === 0 ?
+          {this.props.queue.length <= 1 ?
             <div className="song-container">Nothing up next</div> :
             queueSongs}
         </div>
