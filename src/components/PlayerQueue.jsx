@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 
-const pattern = "/.*\/(.*)/";
-const parser = new RegExp(pattern);
-
-const beautifySongName = ( file ) => {
-  return file.path.split(/\\|\//).pop();
-}
-
 class PlayerQueue extends Component {
   render() {
     var nowPlaying = (this.props.queue.length === 0) ?
       "Nothing playing" :
-      beautifySongName(this.props.queue[0]);
+      this.props.queue[0].name
     var queueSongs = this.props.queue.slice(1).map(function(song) {
       return (
-        <div className="song-container">
-          {beautifySongName(song)}
+        <div className="song-container" key={song.path}>
+          {song.name}
         </div>
       );
     });
