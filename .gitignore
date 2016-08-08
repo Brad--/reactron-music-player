@@ -38,3 +38,6 @@ jspm_packages
 
 # transpiled bundles
 /dist/
+
+# release builds
+/releases/

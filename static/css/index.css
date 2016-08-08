@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: sans-serif;
 }
 
 html, body, #root {
@@ -17,8 +18,7 @@ html, body, #root {
 }
 
 .player-body .menu-bar {
-  background: rgba(52,85,247,1);
-  font-family: sans-serif;
+  background: #CB99C9;
   padding: 10px;
   color: white;
   height: 50px;
@@ -29,7 +29,7 @@ html, body, #root {
 
 .now-playing-bar {
   padding: 10px;
-  background: green;
+  background: #03C03C;
 }
 
 .now-playing-title {
@@ -37,15 +37,24 @@ html, body, #root {
   margin-bottom: 5px;
 }
 
+.queue-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .song-container {
   color: white;
-  background: red;
+  background: #FF6961;
+  margin: 2px;
   padding: 5px;
+  -webkit-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);
 }
 
 .queue-list {
   padding: 10px;
-  background: orange;
+  background: #FFB347;
+  overflow-y: auto;
 }
 .up-next-title {
   color: white;
@@ -71,11 +80,19 @@ html, body, #root {
 }
 
 .drop-area {
-  height: 50px;
+  display: flex;
+  height: 100px;
   margin: 5px;
-  border: 3px dashed #AAA;
+  border: 3px dashed #888;
   border-radius: 10px;
   background: #CCC;
-  text-align: center;
-  color: #AAA;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  transition: 0.2s all linear;
+}
+
+.drop-area:hover {
+  background: #AAA;
+  color: #666;
 }
