@@ -11,12 +11,17 @@ class PlayerBody extends Component {
   };
   onDrop (ev) {
     var path = ev.dataTransfer.files[0].path;
+    var newQueue = this.state.queue;
     if(this.state.url === "") {
-      this.setState({url: path});
+      for (var i = 1; i < ev.dataTransfer.files.length; i++) {
+        newQueue.push(ev.dataTransfer.files[i].path);
+      }
+      this.setState({url: path, queue: newQueue});
     }
     else {
-      var newQueue = this.state.queue;
-      newQueue.push(path);
+      for (var i = 0; i < ev.dataTransfer.files.length; i++) {
+        newQueue.push(ev.dataTransfer.files[i].path);
+      }
       this.setState({queue: newQueue});
     }
     ev.preventDefault();
@@ -46,6 +51,7 @@ class PlayerBody extends Component {
         <div className="spacer" />
         <div className="drop-area"
              onDrop={this.onDrop}>
+             ♬ Drag and drop songs here ♬
         </div>
         <audio className="audio-player"
                src={this.state.url}
