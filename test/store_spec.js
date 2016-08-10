@@ -7,7 +7,9 @@ describe('store', () => {
   it('is a Redux store configured with the correct reducer', () => {
     let store = makeStore();
     expect(store.getState()).to.equal(fromJS({
-      queue: []
+      queue: [],
+      playlists: [],
+      selectedPlaylist: ""
     }));
     store.dispatch({
       type: "ADD_QUEUE",
@@ -15,7 +17,9 @@ describe('store', () => {
     });
 
     expect(store.getState()).to.equal(fromJS({
-      queue: ["Rocket Man"]
+      queue: ["Rocket Man"],
+      playlists: [],
+      selectedPlaylist: ""
     }));
   });
 });

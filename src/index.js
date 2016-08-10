@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {PlayerBodyContainer} from './components/PlayerBody.jsx';
+import PlayerBody from './components/PlayerBody.jsx';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './reducer';
@@ -13,7 +13,7 @@ const store = createStore(reducer);
 
 const App = () => (
   <Provider store={store}>
-    <PlayerBodyContainer />
+    <PlayerBody />
   </Provider>
 );
 
