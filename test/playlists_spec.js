@@ -14,7 +14,8 @@ describe('playlists', () => {
         playlists: [{
           name: "New Playlist",
           songs: []
-        }]
+        }],
+        selectedPlaylist: "New Playlist"
       }));
     });
 
@@ -47,7 +48,8 @@ describe('playlists', () => {
             name: "New Playlist",
             songs: []
           }
-        ]
+        ],
+        selectedPlaylist: "New Playlist"
       }));
     });
   });

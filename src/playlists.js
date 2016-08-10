@@ -1,11 +1,8 @@
 import {Set, fromJS} from 'immutable';
 
-export const INITIAL_STATE = fromJS({
-  playlists: []
-});
-
 export function createNew(state, name="New Playlist") {
-  return state.update('playlists', playlists => playlists.push(fromJS({
+  return state.set('selectedPlaylist', name)
+              .update('playlists', playlists => playlists.push(fromJS({
     name: name,
     songs: []
   })));
@@ -26,4 +23,8 @@ export function renamePlaylist(state, oldName, newName) {
     return playlist.get('name') === oldName;
   });
   return state.setIn(['playlists', selectedPlaylist, 'name'], newName);
+}
+
+export function selectPlaylist(state, name) {
+  return state.set('selectedPlaylist', name);
 }

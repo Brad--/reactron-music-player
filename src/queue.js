@@ -1,7 +1,9 @@
 import {fromJS} from 'immutable';
 
 export const INITIAL_STATE = fromJS({
-  queue: []
+  queue: [],
+  playlists: [],
+  selectedPlaylist: ""
 });
 
 export function addSongs(state, songs) {
