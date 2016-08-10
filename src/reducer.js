@@ -11,6 +11,8 @@ export default function reducer(state = INITIAL_STATE, action){
       return createNew(state, action.name);
     case 'SELECT_PLAYLIST':
       return selectPlaylist(state, action.name);
+    case 'ADD_PLAYLIST':
+      return addToPlaylist(state, action.name, action.newSongs);
   }
   return state;
 }

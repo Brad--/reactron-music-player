@@ -16,3 +16,9 @@ export const selectPlaylist = (name) => ({
   type: "SELECT_PLAYLIST",
   name: name
 });
+
+export const addToPlaylist = (name, newSongs) => ({
+  type: "ADD_PLAYLIST",
+  name: name,
+  newSongs: [...newSongs]
+});

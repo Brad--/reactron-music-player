@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addQueue } from '../dispatchers.js';
 
 class PlayerQueue extends Component {
   render() {
@@ -13,7 +15,7 @@ class PlayerQueue extends Component {
       );
     });
     return (
-      <div className="queue-container">
+      <div className="queue-container" onDrop={this.props.onDrop}>
         <div className="now-playing-bar">
           <div className="now-playing-title">Now Playing: </div>
           <div className="song-container">{nowPlaying}</div>
@@ -29,4 +31,20 @@ class PlayerQueue extends Component {
   }
 };
 
-export default PlayerQueue;
+function mapStateToProps(state) {
+  return {
+    queue: state.get('queue').toJS()
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onDrop: (ev) => {
+      dispatch(addQueue(ev.dataTransfer.files))
+    }
+  };
+};
+
+const PlayerQueueC = connect(mapStateToProps, mapDispatchToProps)(PlayerQueue);
+
+export default PlayerQueueC;
