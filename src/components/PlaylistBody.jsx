@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToPlaylist, addQueue } from '../dispatchers.js';
+import { fromJS } from 'immutable';
 
 class PlaylistBody extends Component {
   constructor(props, context) {
@@ -59,7 +60,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onDrop: (name, ev) => {
-      dispatch(addToPlaylist(name, ev.dataTransfer.files))
+      dispatch(addToPlaylist(name, [...ev.dataTransfer.files].map((File) => {
+        return fromJS({
+          path: File.path,
+          name: File.name
+        });
+      })))
     },
     onDoubleClick: (songs) => {
       dispatch(addQueue(songs))
