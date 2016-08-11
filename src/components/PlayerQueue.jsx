@@ -9,7 +9,7 @@ class PlayerQueue extends Component {
       this.props.queue[0].name
     var queueSongs = this.props.queue.slice(1).map(function(song) {
       return (
-        <div className="song-container" key={song.path}>
+        <div className="song-container">
           {song.name}
         </div>
       );

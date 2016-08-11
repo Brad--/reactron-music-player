@@ -28,7 +28,6 @@ html, body, #root {width: 100%; height: 100%;}
   height: 100%;
   display: flex;
   flex-direction: column;
-  font-size: 1em;
 }
 .playlists-list {
   overflow: auto;
@@ -37,10 +36,12 @@ html, body, #root {width: 100%; height: 100%;}
 .playlist-item,
 input[type="text"],
 input[type="text"]:focus {
+  width: 100%;
   padding: 10px;
   border: none;
   outline: none;
   flex-shrink: 0;
+  font-size: 1em;
 }
 
 .playlist-item:hover,
@@ -88,6 +89,7 @@ input[type="text"]:focus {
 }
 .audio-player {
   width: 100%;
+  background-color: black;
 }
 
 .main-pane {
@@ -103,12 +105,21 @@ input[type="text"]:focus {
   flex-grow: 1;
   height: 100%;
   overflow: auto;
+}
+
+.playlist-container {
+  padding: 10px;
+  width: 100%;
+  flex-grow: 1;
+  height: 100%;
+  overflow: auto;
   border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
 .song-container {
-  padding: 4px;
-  margin: 1px;
+  padding: 10px;
+  margin: 5px;
+  font-size: 1em;
   background-color: rgba(0,0,0,0.1);
   -webkit-user-select: none;
   cursor: default;
