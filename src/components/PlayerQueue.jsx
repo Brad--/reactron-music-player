@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addQueue } from '../dispatchers.js';
+import { fromJS } from 'immutable';
 
 class PlayerQueue extends Component {
   render() {
@@ -9,7 +10,7 @@ class PlayerQueue extends Component {
       this.props.queue[0].name
     var queueSongs = this.props.queue.slice(1).map(function(song) {
       return (
-        <div className="song-container" key={song.path}>
+        <div className="song-container">
           {song.name}
         </div>
       );
@@ -40,7 +41,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onDrop: (ev) => {
-      dispatch(addQueue(ev.dataTransfer.files))
+      dispatch(addQueue([...ev.dataTransfer.files].map((File) => {
+        return fromJS({
+          path: File.path,
+          name: File.name
+        });
+      })))
     }
   };
 };

@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToPlaylist, addQueue } from '../dispatchers.js';
+import { fromJS } from 'immutable';
 
 class PlaylistBody extends Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      searchFilter: ""
+    }
+  }
   render() {
     let playlistIndex = -1;
     for (let i = 0; i < this.props.playlists.length; i += 1) {
@@ -13,12 +20,21 @@ class PlaylistBody extends Component {
     let currentPlaylistSongs = playlistIndex === -1 ?
                                [] :
                                this.props.playlists[playlistIndex].songs;
-    console.log(this.props.current, currentPlaylistSongs);
     return (
-      <div className="queue-container" onDrop={(ev) => {
+      <div className="playlist-container" onDrop={(ev) => {
         this.props.onDrop(this.props.current, ev);
       }}>
-      {currentPlaylistSongs.map((song) => {
+      <input type="text"
+            placeholder="Search playlist"
+            value={this.state.searchFilter}
+            onChange={(ev) => {
+              this.setState({searchFilter: ev.target.value});
+            }}/>
+      {currentPlaylistSongs.filter((song) => {
+        return song.name.toUpperCase().includes(this.state.searchFilter.toUpperCase());
+      }).sort((a,b) => {
+        return a.name.toUpperCase().localeCompare(b.name.toUpperCase());
+      }).map((song) => {
         return (
           <div className="song-container"
             key={song.path}
@@ -44,7 +60,12 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onDrop: (name, ev) => {
-      dispatch(addToPlaylist(name, ev.dataTransfer.files))
+      dispatch(addToPlaylist(name, [...ev.dataTransfer.files].map((File) => {
+        return fromJS({
+          path: File.path,
+          name: File.name
+        });
+      })))
     },
     onDoubleClick: (songs) => {
       dispatch(addQueue(songs))
