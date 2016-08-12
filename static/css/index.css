@@ -46,7 +46,7 @@ input[type="text"]:focus {
 
 .playlist-item:hover,
 .selected {
-  background-color: lightgrey;
+  background-color: rgba(0, 98, 0, 0.4);
 }
 
 .selected {
@@ -99,6 +99,19 @@ input[type="text"]:focus {
   flex-direction: column;
 }
 
+.now-playing-bar {
+  padding: 10px;
+  border-top: 2px solid rgba(0,0,0,0.4);
+  border-bottom: 2px solid rgba(0,0,0,0.4);
+  text-align: center;
+  background-color: rgba(0, 98, 0, 0.4);
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
 .queue-container {
   padding: 10px;
   width: 100%;
@@ -113,14 +126,29 @@ input[type="text"]:focus {
   flex-grow: 1;
   height: 100%;
   overflow: auto;
-  border-bottom: 1px solid rgba(0,0,0,0.4);
 }
 
 .song-container {
   padding: 10px;
   margin: 5px;
   font-size: 1em;
-  background-color: rgba(0,0,0,0.1);
   -webkit-user-select: none;
   cursor: default;
+}
+
+.menu-icon {
+  height: 20px;
+  align-self:
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.song-container:nth-child(odd) {
+  background-color: rgba(0, 98, 0, 0.2);
+}
+
+.song-container:nth-child(even) {
+  background-color: rgba(0, 98, 0, 0.3);
 }
