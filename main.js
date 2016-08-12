@@ -6,7 +6,7 @@ const storage = require('electron-json-storage');
 let win;
 
 function createWindow() {
-  win = new BrowserWindow({width: 1000, height: 700, frame: true});
+  win = new BrowserWindow({width: 1000, height: 700, frame: true, title: "Reactron Music Player"});
   win.loadURL(`file://${__dirname}/index.html`);
 
   win.on('closed', () => {
