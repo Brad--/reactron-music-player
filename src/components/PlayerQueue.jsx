@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addQueue } from '../dispatchers.js';
+import { addToQueue, removeFromQueue, bumpUp, bumpDown } from '../dispatchers.js';
 import { fromJS } from 'immutable';
 
 class PlayerQueue extends Component {
   render() {
-    var queueSongs = this.props.queue.slice(1).map(function(song) {
-      return (
-        <div className="song-container">
-          {song.name}
-        </div>
-      );
-    });
     return (
       <div className="queue-container" onDrop={this.props.onDrop}>
-        <div className="queue-list">
-          {this.props.queue.length <= 1 ?
-            <div className="song-container">Nothing up next</div> :
-            queueSongs}
-        </div>
+      {this.props.queue.length < 2 ?
+        <div className="song-container">Nothing up next</div> :
+        null}
+      {this.props.queue.slice(1).map((song, index) => {
+        return (
+          <div className="song-container">
+            <span className="name-label">{song.name}</span>
+            <span className="action-icon" title="change queue position" onClick={(e) => {
+              this.props.onBumpUp(index + 1);
+            }}>▲</span>
+            <span className="action-icon" title="remove" onClick={(e) => {
+              this.props.onRemoveSong(index + 1);
+            }}>✖</span>
+            <span className="action-icon" title="change queue position" onClick={(e) => {
+              this.props.onBumpDown(index + 1);
+            }}>▼</span>
+          </div>
+        );
+      })}
       </div>
     );
   }
@@ -33,12 +40,21 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onDrop: (ev) => {
-      dispatch(addQueue([...ev.dataTransfer.files].map((File) => {
+      dispatch(addToQueue([...ev.dataTransfer.files].map((File) => {
         return fromJS({
           path: File.path,
           name: File.name
         });
       })))
+    },
+    onRemoveSong: (index) => {
+      dispatch(removeFromQueue(index))
+    },
+    onBumpUp: (index) => {
+      dispatch(bumpUp(index))
+    },
+    onBumpDown: (index) => {
+      dispatch(bumpDown(index))
     }
   };
 };

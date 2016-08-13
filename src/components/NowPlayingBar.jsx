@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addQueue } from '../dispatchers.js';
 import { fromJS } from 'immutable';
 
 class NowPlayingBar extends Component {

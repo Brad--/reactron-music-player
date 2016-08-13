@@ -12,7 +12,7 @@ describe('store', () => {
       selectedPlaylist: ""
     }));
     store.dispatch({
-      type: "ADD_QUEUE",
+      type: "ADD_TO_QUEUE",
       songs: ["Rocket Man"]
     });
 

@@ -1,33 +1,37 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createPlaylist, selectPlaylist } from '../dispatchers.js';
+import { createPlaylist, selectPlaylist, removePlaylist } from '../dispatchers.js';
 
 class PlaylistsSidebar extends Component {
   render() {
     return (
     <div className="sidebar">
       <ul className="playlists-list">
-        {this.props.playlists.map((playlist, i) => {
+        {this.props.playlists.map((playlist, index) => {
           const name = playlist.name;
           let classNames = "playlist-item";
           if(this.props.selected === name) {
             classNames += ' selected';
           }
           return(
-            <li key={i}
+            <div key={index}
                 className={classNames}
-                onClick={(e) => {
+                onClick={(ev) => {
                   this.props.onSelectPlaylist(name);
                 }}>
-              {name}
-            </li>);
+              <span className="name-label">{name}</span>
+              <span className="action-icon" title="remove" onClick={(ev) => {
+                this.props.onRemovePlaylist(index);
+                ev.stopPropagation();
+              }}>✖</span>
+            </div>);
         })}
       </ul>
-      <input type="text" placeholder="Add new playlist" onKeyPress={(e) => {
-        if(e.key === "Enter") {
-          if(e.target.value !== "") {
-            this.props.onCreate(e.target.value);
-            e.target.value = "";
+      <input type="text" placeholder="Add new playlist" onKeyPress={(ev) => {
+        if(ev.key === "Enter") {
+          if(ev.target.value !== "") {
+            this.props.onCreate(ev.target.value);
+            ev.target.value = "";
           } else {
             this.props.onCreate("New Playlist");
           }
@@ -52,6 +56,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSelectPlaylist: (name) => {
       dispatch(selectPlaylist(name))
+    },
+    onRemovePlaylist: (index) => {
+      dispatch(removePlaylist(index))
     }
   };
 };
