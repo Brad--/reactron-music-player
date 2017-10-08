@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToPlaylist, addQueue } from '../dispatchers.js';
+import { addToPlaylist, addToQueue, removeFromPlaylist } from '../dispatchers.js';
 import { fromJS } from 'immutable';
 
 class PlaylistBody extends Component {
@@ -32,16 +32,17 @@ class PlaylistBody extends Component {
             }}/>
       {currentPlaylistSongs.filter((song) => {
         return song.name.toUpperCase().includes(this.state.searchFilter.toUpperCase());
-      }).sort((a,b) => {
-        return a.name.toUpperCase().localeCompare(b.name.toUpperCase());
-      }).map((song) => {
+      }).map((song, index) => {
         return (
           <div className="song-container"
             key={song.path}
             onDoubleClick={(e) => {
               this.props.onDoubleClick([song]);
             }}>
-            {song.name}
+            <span className="name-label">{song.name}</span>
+            <span className="action-icon" title="remove" onClick={(e) => {
+              this.props.onRemoveSong(this.props.current, index);
+            }}>✖</span>
           </div>
         );
       })}
@@ -68,7 +69,10 @@ function mapDispatchToProps(dispatch) {
       })))
     },
     onDoubleClick: (songs) => {
-      dispatch(addQueue(songs))
+      dispatch(addToQueue(songs))
+    },
+    onRemoveSong: (name, index) => {
+      dispatch(removeFromPlaylist(name, index))
     }
   };
 };

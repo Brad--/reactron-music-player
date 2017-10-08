@@ -7,7 +7,7 @@ import PlaylistBody from './PlaylistBody.jsx';
 import AudioPlayer from './AudioPlayer.jsx';
 import { connect } from 'react-redux';
 import SplitPane from 'react-split-pane';
-import { addQueue, next, createPlaylist, selectPlaylist } from '../dispatchers.js';
+import { addToQueue, next, createPlaylist, selectPlaylist } from '../dispatchers.js';
 
 export class PlayerBody extends Component {
   constructor(props) {
